@@ -40,7 +40,7 @@ public class ChatBotActivity extends AppCompatActivity {
         if (hour >= 4 && hour < 11) {
             greeting = "おはようございます！";
         } else if (hour >= 11 && hour < 18) {
-            greeting = "こんにちは！\nご用件はなんでしょうか？\n以下の内容からお選びください！\n\n⑴ ショッピング\n⑵ 架空請求";
+            greeting = "こんにちは！\nご用件はなんでしょうか？\n以下の内容からお選びください！\n\n⑴ ショッピング\n⑵ 架空請求\n⑶ フィッシング詐欺";
         } else {
             greeting = "こんばんは！";
         }
@@ -119,7 +119,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messages.add(new Message("了解しました。\n架空請求の例文を送信致します。", Message.Sender.BOT,false));
+                                messages.add(new Message("了解しました。\n以下に架空請求の例文を送信致します。", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
                             }
@@ -204,6 +204,58 @@ public class ChatBotActivity extends AppCompatActivity {
                                 adapter.notifyItemInserted(messages.size() - 1);
                             }
                         }, 14000);
+                    }
+
+                    if (text.equals("フィッシング詐欺")) {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                messages.add(new Message("了解しました。\n以下にフィッシング詐欺の例文を送信します。", Message.Sender.BOT,false));
+                                recyclerView.scrollToPosition(messages.size() - 1);  // 追加
+                                adapter.notifyItemInserted(messages.size() - 1);
+                            }
+                        }, 2000);
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                messages.add(new Message("-----------------------------------\n" +
+                                        "件名：【重要】あなたのSpotifyアカウントがロックされました\n" +
+                                        "\n" +
+                                        "尊敬するSpotifyユーザー様へ、\n" +
+                                        "\n" +
+                                        "Spotifyをご愛用いただき、心より感謝申し上げます。\n" +
+                                        "\n" +
+                                        "しかしながら、お客様のアカウントに異常なログイン試行が確認されました。お客様の安全を確保するため、一時的にアカウントをロックしています。\n" +
+                                        "\n" +
+                                        "アカウントを再度利用するには、以下のリンクからパスワードをリセットしてください。\n" +
+                                        "\n" +
+                                        "パスワードをリセットする：http://www.spotify-account-reset.com\n" +
+                                        "\n" +
+                                        "何卒、ご理解とご協力を賜りますようお願い申し上げます。\n" +
+                                        "\n" +
+                                        "-----------------------------------\n", Message.Sender.BOT,false));
+                                recyclerView.scrollToPosition(messages.size() - 1);  // 追加
+                                adapter.notifyItemInserted(messages.size() - 1);
+                            }
+                        }, 4000);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                messages.add(new Message("フィッシング詐欺とは、実在する企業や組織を装ってメールを送り不正なウェブサイトに誘導し\n個人情報をだまし取ろうとするものです。\n" +
+                                        "\n" +
+                                        "もし、こんなメールが来たら、次のように対処してください：\n" +
+                                        "\n" +
+                                        "1. メールの送信元や内容をよく確認しましょう。送信元が怪しい場合や、リンクをクリックするように促される場合は特に注意が必要です。\n" +
+                                        "2. メールに書かれているリンクをクリックせず、公式のウェブサイトやアプリから直接ログインして状況を確認しましょう。\n" +
+                                        "3. メールの送信元やリンク先のURLが怪しいと思ったら、すぐに削除しましょう。\n" +
+                                        "4. それでも不安な場合は、信頼できる人に相談しましょう。\n" +
+                                        "\n" +
+                                        "インターネットは便利な反面、悪用する人もいます。だからこそ、注意深く利用することが大切です。何かわからないことがあったら、信頼できる人に相談しましょう。\n", Message.Sender.BOT,false));
+                                recyclerView.scrollToPosition(messages.size() - 1);  // 追加
+                                adapter.notifyItemInserted(messages.size() - 1);
+                            }
+                        }, 4000);
                     }
 
                 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201164596927",
+    "project_id": "resolx-5ad4b",
+    "storage_bucket": "resolx-5ad4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201164596927:android:938e72112bbf5274da080a",
+        "android_client_info": {
+          "package_name": "xyz.cotoha.program.qa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Z5Ax0SkadVlGGK95A-cRvzjkgJm91FU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ResolX</string>
+    <string name="channel_name">通知チャンネル名</string>
+    <string name="channel_description">通知チャンネルの説明</string>
+</resources>

@@ -20,7 +20,7 @@ public class PrecautionActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         List<Precaution> precautionList = new ArrayList<>();
-        precautionList.add(new Precaution("⑴ 会員登録中に別のページに移ると...", "　タップして詳細を見てください"));
+        precautionList.add(new Precaution("⑴ 会員登録中に別のページに移ると", "　タップして詳細を見てください"));
         precautionList.add(new Precaution("⑵ ネットを閲覧してたら突然ウイルスが!?", "　タップして詳細を見てください"));
         precautionList.add(new Precaution("⑶ 不審なショートメールが届いたら", "　タップして詳細を見てください"));
 

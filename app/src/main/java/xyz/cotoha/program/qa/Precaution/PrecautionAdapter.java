@@ -17,7 +17,7 @@ import xyz.cotoha.program.qa.DefaultActivity;
 public class PrecautionAdapter extends RecyclerView.Adapter<PrecautionAdapter.ViewHolder> {
     private List<Precaution> precautionList;
     private Context context;
-    private Class[] activityClasses = {};
+    private Class[] activityClasses = {Precaution1Activity.class};
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView questionView;

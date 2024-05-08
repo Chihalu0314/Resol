@@ -38,11 +38,11 @@ public class ChatBotActivity extends AppCompatActivity {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
         if (hour >= 4 && hour < 11) {
-            greeting = "おはようございます！";
+            greeting = "おはようございます！\nご用件はなんでしょうか？\n以下の内容からお選びください！\n\n⑴ ショッピング\n⑵ 架空請求\n⑶ フィッシング詐欺";
         } else if (hour >= 11 && hour < 18) {
             greeting = "こんにちは！\nご用件はなんでしょうか？\n以下の内容からお選びください！\n\n⑴ ショッピング\n⑵ 架空請求\n⑶ フィッシング詐欺";
         } else {
-            greeting = "こんばんは！";
+            greeting = "こんばんは！\nご用件はなんでしょうか？\n以下の内容からお選びください！\n\n⑴ ショッピング\n⑵ 架空請求\n⑶ フィッシング詐欺";
         }
 
 
@@ -255,12 +255,11 @@ public class ChatBotActivity extends AppCompatActivity {
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
                             }
-                        }, 4000);
+                        }, 8000);
                     }
 
                 }
             }
         });
-
     }
 }

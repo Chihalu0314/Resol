@@ -39,7 +39,9 @@ public class Question7Activity extends AppCompatActivity {
                 "・最高音質 約144MB/1時間\n\n" +
                 "標準音質か高音質が適切\n\n" +
                 "イヤホンで聞かない限りそんなに変わりはない\n\n\n" +
-                "⑵ 曲を端末に入れる\nこうすることでデータ通信量は一切増えない\n\n\n\n";
+                "⑵ 曲を端末に入れる\nこうすることでデータ通信量は一切増えない\n\n\n" +
+                "まとめ\n\n" +
+                "動画と音楽では消費するデータ通信量は違う";
 
 
         int colorRed = getResources().getColor(R.color.red);

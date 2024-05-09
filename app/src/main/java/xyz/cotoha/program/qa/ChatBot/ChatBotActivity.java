@@ -17,6 +17,9 @@ import java.util.List;
 import ResolX.R;
 
 public class ChatBotActivity extends AppCompatActivity {
+
+    // 他のフィールドと同様に、メールアドレスが既に送信されたかどうかを追跡するフィールドを追加します。
+    private boolean isAddressAlreadySent = false;
     private MessageAdapter adapter;
     private List<Message> messages;
     private Handler handler;
@@ -79,31 +82,59 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                messages.add(new Message("処理が完了しました", Message.Sender.BOT,false));
+                                messages.add(new Message("処理中です", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
                             }
-                        }, 2000);
-
+                        }, 2000);  // 「処理中です」メッセージの表示を1秒遅らせます。
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                messages.remove(messages.size() - 1);  // 「処理中」メッセージを削除
+                                adapter.notifyItemRemoved(messages.size());  // 削除を通知
                                 messages.add(new Message("次にメールアドレスを入力してください", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
                             }
-                        }, 4000);
+                        }, 7000);  // 「次にメールアドレスを入力してください」メッセージの表示を3秒後（「処理中です」メッセージの表示から4秒後）に設定します。
                     }
+
                     if (text.equals("アドレス")) {
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                messages.add(new Message("処理が完了しました", Message.Sender.BOT,false));
-                                recyclerView.scrollToPosition(messages.size() - 1);  // 追加
-                                adapter.notifyItemInserted(messages.size() - 1);
-                            }
-                        }, 2000);
+                        if (isAddressAlreadySent) {
+                            // メールアドレスが既に送信されている場合、エラーメッセージを表示します。
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messages.add(new Message("このメールアドレスは既に登録されているため使えません", Message.Sender.BOT, true));
+                                    recyclerView.scrollToPosition(messages.size() - 1);
+                                    adapter.notifyItemInserted(messages.size() - 1);
+                                }
+                            }, 2000);
+                        } else {
+                            // メールアドレスがまだ送信されていない場合、通常の処理を行い、フラグを更新します。
+                            isAddressAlreadySent = true;
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messages.add(new Message("処理中です", Message.Sender.BOT,false));
+                                    recyclerView.scrollToPosition(messages.size() - 1);  // 追加
+                                    adapter.notifyItemInserted(messages.size() - 1);
+                                }
+                            }, 2000);  // 「処理中です」メッセージの表示を1秒遅らせます。
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    messages.remove(messages.size() - 1);  // 「処理中」メッセージを削除
+                                    adapter.notifyItemRemoved(messages.size());  // 削除を通知
+                                    messages.add(new Message("メールアドレスの登録が完了しました", Message.Sender.BOT,false));
+                                    recyclerView.scrollToPosition(messages.size() - 1);  // 追加
+                                    adapter.notifyItemInserted(messages.size() - 1);
+                                }
+                            }, 4000);  // 「メールアドレスの登録が完了しました」メッセージの表示を3秒後（「処理中です」メッセージの表示から4秒後）に設定します。
+                        }
                     }
+
+
                     if (text.equals("アドレス2")) {
                         handler.postDelayed(new Runnable() {
                             @Override

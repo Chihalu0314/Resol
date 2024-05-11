@@ -40,8 +40,8 @@ public class Question7Activity extends AppCompatActivity {
                 "標準音質か高音質が適切\n\n" +
                 "イヤホンで聞かない限りそんなに変わりはない\n\n\n" +
                 "⑵ 曲を端末に入れる\nこうすることでデータ通信量は一切増えない\n\n\n" +
-                "まとめ\n\n" +
-                "動画と音楽では消費するデータ通信量は違う";
+                "===============まとめ===============\n\n" +
+                "動画と音楽では消費するデータ通信量は違う¥\n\n\n\n";
 
 
         int colorRed = getResources().getColor(R.color.red);

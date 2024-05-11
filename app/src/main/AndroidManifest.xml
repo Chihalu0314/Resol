@@ -45,8 +45,6 @@
         <activity android:name="xyz.cotoha.program.qa.Qand.Question7Activity"></activity>
         <activity android:name="xyz.cotoha.program.qa.Qand.Question8Activity"></activity>
         <activity android:name="xyz.cotoha.program.qa.DefaultActivity"></activity>
-        <activity android:name="xyz.cotoha.program.qa.Precaution.PrecautionActivity"></activity>
-        <activity android:name="xyz.cotoha.program.qa.Precaution.Precaution1Activity" />
 
 
         <meta-data

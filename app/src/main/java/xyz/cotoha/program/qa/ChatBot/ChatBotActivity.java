@@ -1,5 +1,6 @@
 package xyz.cotoha.program.qa.ChatBot;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -17,6 +18,9 @@ import java.util.List;
 import ResolX.R;
 
 public class ChatBotActivity extends AppCompatActivity {
+
+    private MediaPlayer userSound;
+    private MediaPlayer botSound;
 
     // 他のフィールドと同様に、メールアドレスが既に送信されたかどうかを追跡するフィールドを追加します。
     private boolean isAddressAlreadySent = false;
@@ -37,6 +41,9 @@ public class ChatBotActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        userSound = MediaPlayer.create(this, R.raw.sousin);
+        botSound = MediaPlayer.create(this, R.raw.sousin);
+
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
@@ -52,6 +59,7 @@ public class ChatBotActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                botSound.start();
                 messages.add(new Message(greeting, Message.Sender.BOT, false));
                 adapter.notifyItemInserted(messages.size() - 1);
             }
@@ -63,6 +71,7 @@ public class ChatBotActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = inputMessage.getText().toString();
                 if (!text.isEmpty()) {
+                    userSound.start();
                     messages.add(new Message(text, Message.Sender.USER,false));
                     adapter.notifyItemInserted(messages.size() - 1);
                     recyclerView.scrollToPosition(messages.size() - 1);  // 追加
@@ -72,6 +81,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("名前を入力してください", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
@@ -82,6 +92,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("処理中です", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
@@ -90,6 +101,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.remove(messages.size() - 1);  // 「処理中」メッセージを削除
                                 adapter.notifyItemRemoved(messages.size());  // 削除を通知
                                 messages.add(new Message("次にメールアドレスを入力してください", Message.Sender.BOT,false));
@@ -105,17 +117,57 @@ public class ChatBotActivity extends AppCompatActivity {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    botSound.start();
                                     messages.add(new Message("このメールアドレスは既に登録されているため使えません", Message.Sender.BOT, true));
                                     recyclerView.scrollToPosition(messages.size() - 1);
                                     adapter.notifyItemInserted(messages.size() - 1);
                                 }
                             }, 2000);
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    botSound.start();
+                                    messages.add(new Message("Q：なぜ？\n\nA：最初にアドレスを送信したときに、リアルタイムでサーバーで処理がされてしまっているからです。", Message.Sender.BOT, false));
+                                    recyclerView.scrollToPosition(messages.size() - 1);
+                                    adapter.notifyItemInserted(messages.size() - 1);
+                                }
+                            }, 5000);
+
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    botSound.start();
+                                    messages.add(new Message("Q：リアルタイム処理とは？\n\nA：購入ボタンを押した瞬間に、在庫の確認、支払い方法の確認、配送先の確認、注文の確定などの全ての処理が即座に行われることです。", Message.Sender.BOT, false));
+                                    recyclerView.scrollToPosition(messages.size() - 1);
+                                    adapter.notifyItemInserted(messages.size() - 1);
+                                }
+                            }, 7000);
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    botSound.start();
+                                    messages.add(new Message("Q：サーバーって何？\n\nA：サーバーは郵便局のようなものです。郵便局（サーバー）は、人々（クライアント）が送りたい手紙やパッケージ（データ）を受け取り、適切な宛先に配達します。また、郵便局は人々からの手紙やパッケージを保管し、それらが必要なときに提供します。このように、サーバーはクライアントからの要求を受けてデータを送受信し、必要に応じてデータを保管します。", Message.Sender.BOT, false));
+                                    recyclerView.scrollToPosition(messages.size() - 1);
+                                    adapter.notifyItemInserted(messages.size() - 1);
+                                }
+                            }, 10000);
+
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    botSound.start();
+                                    messages.add(new Message("Q：どうしたらいい？\n\nA：一度仮登録のメールが来ているか確認して、来ていたら本登録をしてください。\nパスワードの入力が必要な場合リセットしてください。\n不可能な場合は違うメールアドレスで再度登録してください。", Message.Sender.BOT, false));
+                                    recyclerView.scrollToPosition(messages.size() - 1);
+                                    adapter.notifyItemInserted(messages.size() - 1);
+                                }
+                            }, 13000);
                         } else {
                             // メールアドレスがまだ送信されていない場合、通常の処理を行い、フラグを更新します。
                             isAddressAlreadySent = true;
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    botSound.start();
                                     messages.add(new Message("処理中です", Message.Sender.BOT,false));
                                     recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                     adapter.notifyItemInserted(messages.size() - 1);
@@ -124,6 +176,7 @@ public class ChatBotActivity extends AppCompatActivity {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    botSound.start();
                                     messages.remove(messages.size() - 1);  // 「処理中」メッセージを削除
                                     adapter.notifyItemRemoved(messages.size());  // 削除を通知
                                     messages.add(new Message("メールアドレスの登録が完了しました", Message.Sender.BOT,false));
@@ -134,22 +187,11 @@ public class ChatBotActivity extends AppCompatActivity {
                         }
                     }
 
-
-                    if (text.equals("アドレス2")) {
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                messages.add(new Message("このメールアドレスは既に登録されているため使えません", Message.Sender.BOT, true));
-                                recyclerView.scrollToPosition(messages.size() - 1);  // 追加
-                                adapter.notifyItemInserted(messages.size() - 1);
-                            }
-                        }, 2000);
-                    }
-
                     if (text.equals("架空請求")) {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("了解しました。\n以下に架空請求の例文を送信致します。", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
@@ -159,6 +201,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("件名：【重要】未払い料金のお知らせ\n" +
                                         "\n" +
                                         "お客様へ、\n" +
@@ -187,6 +230,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("-----------------------------------\n" +
                                         "件名：【最終通告】Spotify Premiumの未払い料金について\n" +
                                         "\n" +
@@ -220,6 +264,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("架空請求とは、実際には利用していないサービスや商品の料金を請求する詐欺の一種です\n。メールやハガキ、電話などで突然「料金が未払いだ」と連絡が来ることがあります。\n" +
                                         "\n" +
                                         "しかし、大切なことは「身に覚えのない請求には絶対に応じない」ことです。また、個人情報を教えないようにしましょう。\n" +
@@ -241,6 +286,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("了解しました。\n以下にフィッシング詐欺の例文を送信します。", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
@@ -250,6 +296,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("-----------------------------------\n" +
                                         "件名：【重要】あなたのSpotifyアカウントがロックされました\n" +
                                         "\n" +
@@ -273,6 +320,7 @@ public class ChatBotActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                botSound.start();
                                 messages.add(new Message("フィッシング詐欺とは、実在する企業や組織を装ってメールを送り不正なウェブサイトに誘導し\n個人情報をだまし取ろうとするものです。\n" +
                                         "\n" +
                                         "もし、こんなメールが来たら、次のように対処してください：\n" +

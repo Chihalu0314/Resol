@@ -35,15 +35,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button2 = findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PrecautionActivity.class);
-                startActivity(intent);
-            }
-        });
-
         findViewById(R.id.open_chat_bot_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

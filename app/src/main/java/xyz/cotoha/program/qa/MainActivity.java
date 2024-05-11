@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat;
 
 import ResolX.R;
 import xyz.cotoha.program.qa.ChatBot.ChatBotActivity;
-import xyz.cotoha.program.qa.Precaution.PrecautionActivity;
 import xyz.cotoha.program.qa.Qand.QandAActivity;
 
 public class MainActivity extends AppCompatActivity {

@@ -9,6 +9,8 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Random;
 import java.util.TimeZone;
 
 import java.util.ArrayList;
@@ -47,6 +49,10 @@ public class ChatBotActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
+        String[] botRandomMessages = {
+                "申し訳ありません、私はAIではない為、以下の事以外には対応することができません。\n\n⑴ ショッピング\n⑵ 架空請求\n⑶ フィッシング詐欺\n\n※今後新しい内容を追加予定です※"
+        };
+
         if (hour >= 4 && hour < 11) {
             greeting = "おはようございます！\nご用件はなんでしょうか？\n以下の内容からお選びください！\n\n⑴ ショッピング\n⑵ 架空請求\n⑶ フィッシング詐欺";
         } else if (hour >= 11 && hour < 18) {
@@ -67,6 +73,7 @@ public class ChatBotActivity extends AppCompatActivity {
 
         EditText inputMessage = findViewById(R.id.input_message);
         findViewById(R.id.send_button).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String text = inputMessage.getText().toString();
@@ -77,11 +84,27 @@ public class ChatBotActivity extends AppCompatActivity {
                     recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                     inputMessage.setText("");
 
+                    // ユーザーが送信したメッセージが特定のキーワードに一致しない場合に、ボットがランダムなメッセージを送信するようにします。
+                    if (!text.equals("ショッピング") && !text.equals("名前") && !text.equals("架空請求") && !text.equals("フィッシング詐欺") && !text.equals("アドレス")) {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                botSound.start();
+                                // ランダムなメッセージを選択します。
+                                String randomMessage = botRandomMessages[new Random().nextInt(botRandomMessages.length)];
+                                messages.add(new Message(randomMessage, Message.Sender.BOT,false));
+                                recyclerView.scrollToPosition(messages.size() - 1);  // 追加
+                                adapter.notifyItemInserted(messages.size() - 1);
+                            }
+                        }, 2000);
+                    }
+
                     if (text.equals("ショッピング")) {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 botSound.start();
+                                String randomMessage = botRandomMessages[new Random().nextInt(botRandomMessages.length)];
                                 messages.add(new Message("名前を入力してください", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
@@ -93,6 +116,7 @@ public class ChatBotActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 botSound.start();
+                                String randomMessage = botRandomMessages[new Random().nextInt(botRandomMessages.length)];
                                 messages.add(new Message("処理中です", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
@@ -102,9 +126,10 @@ public class ChatBotActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 botSound.start();
+                                String randomMessage = botRandomMessages[new Random().nextInt(botRandomMessages.length)];
                                 messages.remove(messages.size() - 1);  // 「処理中」メッセージを削除
                                 adapter.notifyItemRemoved(messages.size());  // 削除を通知
-                                messages.add(new Message("次にメールアドレスを入力してください", Message.Sender.BOT,false));
+                                messages.add(new Message("次にメールアドレスを入力してください\nアドレスと入力してください（botから返事が返ってきたらもう一度アドレスと入力してください）", Message.Sender.BOT,false));
                                 recyclerView.scrollToPosition(messages.size() - 1);  // 追加
                                 adapter.notifyItemInserted(messages.size() - 1);
                             }
@@ -118,6 +143,7 @@ public class ChatBotActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     botSound.start();
+                                    String randomMessage = botRandomMessages[new Random().nextInt(botRandomMessages.length)];
                                     messages.add(new Message("このメールアドレスは既に登録されているため使えません", Message.Sender.BOT, true));
                                     recyclerView.scrollToPosition(messages.size() - 1);
                                     adapter.notifyItemInserted(messages.size() - 1);

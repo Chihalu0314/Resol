@@ -28,7 +28,7 @@ public class QandAActivity extends AppCompatActivity {
         qandaList.add(new QandA("Q6：間違えて写真、動画を消してしまった", "A：大抵30日間まではゴミ箱の中に入っています\n　  ゴミ箱から復元してください"));
         qandaList.add(new QandA("Q7：データ通信量の節約がしたい", "A：ここをタップして詳細を見てください"));
         qandaList.add(new QandA("Q8：文字などが見にくい", "A：ここをタップして詳細を見てください"));
-        qandaList.add(new QandA("Q9：会員登録中に別のページに移ってしまった", "　タップして詳細を見てください"));
+        qandaList.add(new QandA("Q9：この質問は準備中です", ""));
 
         QandAAdapter adapter = new QandAAdapter(qandaList, this);
         recyclerView.setAdapter(adapter);
